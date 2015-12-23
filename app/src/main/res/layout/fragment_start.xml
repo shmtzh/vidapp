@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.vidapp.vidapp.fragment.StartFragment">
+
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:background="@drawable/start_back"
+        android:padding="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/start"
+        android:id="@+id/start_image_view" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@drawable/help_back"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:src="@drawable/help"
+            android:id="@+id/help_image_view" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:background="@drawable/mylib_back"
+            android:layout_height="60dp"
+            android:layout_weight="3"
+            android:padding="15dp"
+            android:src="@drawable/mylib"
+            android:id="@+id/mylib_image_view" />
+    </LinearLayout>
+
+</RelativeLayout>
