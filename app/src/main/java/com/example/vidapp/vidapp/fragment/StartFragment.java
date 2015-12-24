@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 
 public class StartFragment extends Fragment implements View.OnClickListener {
@@ -20,10 +21,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
     CommunicationChannel mCommChListner = null;
 
-    public interface CommunicationChannel
-    {
-        public void setCommunication(int id);
-    }
 
 
     @Override

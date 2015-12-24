@@ -14,8 +14,9 @@ import com.example.vidapp.vidapp.fragment.ChooseClipFragment;
 import com.example.vidapp.vidapp.fragment.HelpFragment;
 import com.example.vidapp.vidapp.fragment.MyLibFragment;
 import com.example.vidapp.vidapp.fragment.StartFragment;
+import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
-public class StartActivity extends AppCompatActivity implements StartFragment.CommunicationChannel {
+public class StartActivity extends AppCompatActivity implements CommunicationChannel {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

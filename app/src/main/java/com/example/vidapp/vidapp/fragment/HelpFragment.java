@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 
 public class HelpFragment extends Fragment implements View.OnClickListener {
@@ -16,12 +17,9 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
     ImageView homeButton;
 
-    public interface CommunicationChannel
-    {
-        public void setCommunication(int id);
-    }
 
-    CommunicationChannel mCommChListner = null;
+
+    CommunicationChannel mCommChListner;
 
 
     @Override
@@ -59,9 +57,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         {
             throw new ClassCastException();
         }
-
     }
-
 
     public void sendMessage(int id)
     {
