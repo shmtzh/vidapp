@@ -33,6 +33,8 @@ public class ChooseClipFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();
 
     private OnFragmentInteractionListener mListener;
+    ArrayList<File> files;
+    ArrayList<Bitmap> thumbnails = new ArrayList<>();
 
     public ChooseClipFragment() {
     }
@@ -58,7 +60,7 @@ public class ChooseClipFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_choose_clip, container, false);
         GridView gridview = (GridView) view.findViewById(R.id.gridview);
-        gridview.setAdapter(new ChoosingClipAdapter(getActivity(), searchForVideoFiles()));
+        gridview.setAdapter(new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles())));
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -86,10 +88,19 @@ public class ChooseClipFragment extends Fragment {
         boolean states = dir.canRead();
         boolean is = dir.isDirectory();
         boolean es = dir.exists();
-        ArrayList<File> files = getListFiles(new File(dirPath));
+        files = getListFiles(new File(dirPath));
         Log.d(TAG, String.valueOf(files.size()));
 
         return files;
+    }
+
+    public ArrayList<Bitmap> convertFileToBitMap(ArrayList<File> files) {
+
+        for (int i = 0; i < files.size(); i++) {
+            thumbnails.add(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
+                    MediaStore.Images.Thumbnails.MINI_KIND));
+        }
+        return thumbnails;
     }
 
     @Override
