@@ -72,7 +72,8 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 break;
         }
 
-        transaction.replace(R.id.container, fragment).addToBackStack("").commit();
+        transaction.replace(R.id.container, fragment).addToBackStack("").setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
+
 
     }
 }
