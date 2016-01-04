@@ -3,23 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <ImageView
-        android:id="@+id/ColPhoto"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/video_thumbnail"
+        android:layout_width="90dp"
+        android:padding="1dp"
+        android:background="@color/white"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="8dp"
         android:adjustViewBounds="true"
         android:gravity="center"
         android:scaleType="fitCenter" />
 
+
     <ImageView
-        android:id="@+id/test"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:id="@+id/selection"
+        android:layout_width="90dp"
+        android:visibility="gone"
+        android:src="@drawable/plus"
+        android:background="@color/yellow_trans"
+        android:padding="10dp"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="8dp"
         android:adjustViewBounds="true"
         android:gravity="center"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"  />
 </FrameLayout>

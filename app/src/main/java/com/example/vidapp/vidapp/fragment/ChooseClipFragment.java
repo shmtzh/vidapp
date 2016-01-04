@@ -35,6 +35,7 @@ public class ChooseClipFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     ArrayList<File> files;
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
+    ChoosingClipAdapter adapter;
 
     public ChooseClipFragment() {
     }
@@ -59,13 +60,15 @@ public class ChooseClipFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_choose_clip, container, false);
-        GridView gridview = (GridView) view.findViewById(R.id.gridview);
-        gridview.setAdapter(new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles())));
+        final GridView gridview = (GridView) view.findViewById(R.id.gridview);
+        adapter = new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles()));
+        gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "" + position,
-                        Toast.LENGTH_SHORT).show();
+
+//                thumbnails.get(position).setState(1);
+//                adapter.notifyDataSetChanged();
             }
         });
 
@@ -82,12 +85,7 @@ public class ChooseClipFragment extends Fragment {
 
     public ArrayList<File> searchForVideoFiles() {
         final String dirPath = Environment.getRootDirectory().getParent() + "sdcard";
-        Log.d(TAG, Environment.getExternalStorageState());
-        Log.d(TAG, dirPath);
         File dir = new File(dirPath);
-        boolean states = dir.canRead();
-        boolean is = dir.isDirectory();
-        boolean es = dir.exists();
         files = getListFiles(new File(dirPath));
         Log.d(TAG, String.valueOf(files.size()));
 

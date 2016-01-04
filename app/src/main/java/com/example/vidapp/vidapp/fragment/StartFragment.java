@@ -25,7 +25,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
     ImageView startImageView, helpImageView, mylibImageView;
 
-    CommunicationChannel mCommChListner = null;
+    CommunicationChannel mCommChListener = null;
 
 
 
@@ -109,7 +109,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         if(context instanceof CommunicationChannel)
         {
-            mCommChListner = (CommunicationChannel) context;
+            mCommChListener = (CommunicationChannel) context;
         }
         else
         {
@@ -126,7 +126,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
     public void sendMessage(int id)
     {
-        mCommChListner.setCommunication(id);
+        mCommChListener.setCommunication(id);
     }
 
 
