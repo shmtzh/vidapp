@@ -67,14 +67,32 @@ public class ChooseClipFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-//                thumbnails.get(position).setState(1);
-//                adapter.notifyDataSetChanged();
+
             }
         });
 
 
         return view;
     }
+
+//    myObjects = new ArrayList<GridObject>();
+//    for (String s : numbers) {
+//        myObjects.add(new GridObject(s, 0));
+//    }
+//
+//    gridView = (GridView) findViewById(R.id.gridView1);
+//
+//    myAdapter = new MyCustomAdapter(this);
+//
+//    gridView.setAdapter(myAdapter);
+//    gridView.setOnItemClickListener(new OnItemClickListener() {
+//
+//        @Override
+//        public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
+//            myObjects.get(position).setState(1);
+//            myAdapter.notifyDataSetChanged();
+//        }
+//    });
 
 
     public void onButtonPressed(Uri uri) {
