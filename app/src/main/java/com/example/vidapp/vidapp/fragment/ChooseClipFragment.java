@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.adapter.ChoosingClipAdapter;
+import com.example.vidapp.vidapp.adapter.MultipleSelectionGridAdapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public class ChooseClipFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     ArrayList<File> files;
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
-    ChoosingClipAdapter adapter;
-
+//    ChoosingClipAdapter adapter;
+MultipleSelectionGridAdapter adapter;
     public ChooseClipFragment() {
     }
 
@@ -58,16 +59,19 @@ public class ChooseClipFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_choose_clip, container, false);
-        final GridView gridview = (GridView) view.findViewById(R.id.gridview);
-        adapter = new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles()));
-        gridview.setAdapter(adapter);
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+//        final GridView gridview = (GridView) view.findViewById(R.id.gridview);
+//        adapter = new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles()));
+//        gridview.setAdapter(adapter);
 
 
+        GridView gridView = (GridView) view.findViewById(R.id.gridview);
+        List<Bitmap> list = convertFileToBitMap(searchForVideoFiles());
+        adapter = new MultipleSelectionGridAdapter(savedInstanceState, list);
+        adapter.setAdapterView(gridView);
+        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Toast.makeText(getActivity(), "Item click: " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -95,14 +99,8 @@ public class ChooseClipFragment extends Fragment {
 //    });
 
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     public ArrayList<File> searchForVideoFiles() {
-        final String dirPath = Environment.getRootDirectory().getParent() + "sdcard";
+        final String dirPath = Environment.getRootDirectory().getParent() + "sdcard/DCIM";
         File dir = new File(dirPath);
         files = getListFiles(new File(dirPath));
         Log.d(TAG, String.valueOf(files.size()));

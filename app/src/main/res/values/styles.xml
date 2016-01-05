@@ -18,4 +18,17 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="MultiChoiceAdapter_DefaultSelectedItemStyle">
+        <item name="itemClickInActionMode">selectItem</item>
+    </style>
+
+
+    <style name="CheckableImageViewStyle">
+        <item name="android:foreground">@drawable/plus</item>
+    </style>
+
+    <style name="MultiChoiceAdapter_DefaultCheckableImageViewStyle">
+        <item name="android:foreground">@drawable/gallery_selector</item>
+    </style>
 </resources>

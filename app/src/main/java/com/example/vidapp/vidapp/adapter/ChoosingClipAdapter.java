@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by shmtzh on 12/27/15.
+  Created by shmtzh on 12/27/15.
  */
 public class ChoosingClipAdapter extends BaseAdapter {
     private Context mContext;
@@ -56,21 +56,27 @@ public class ChoosingClipAdapter extends BaseAdapter {
 
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 //        GridObject object = myObjects.get(position);
-        ViewHolder holder;
+       ViewHolder holder = null;
 
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.tables, null);
             holder = new ViewHolder();
+            holder.selection = (ImageView) convertView.findViewById(R.id.selection);
+            holder.bitmap = (ImageView) convertView.findViewById(R.id.video_thumbnail);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        holder.bitmap = (ImageView) convertView.findViewById(R.id.video_thumbnail);
-        holder.bitmap.setImageBitmap(list.get(position));
+//        final View finalConvertView = convertView;
+//        convertView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//               holder.selection.setVisibility(View.VISIBLE);  }
+//        });
+
 
 
 
