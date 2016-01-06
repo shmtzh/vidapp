@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  */
 public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
 
-    private ActionMode actionMode;
+//    private ActionMode actionMode;
     ImageView imageView;
 
     protected MultiChoiceAdapterHelper(BaseAdapter owner) {
@@ -30,7 +30,7 @@ public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
             imageView.setVisibility(View.GONE);
 
             Method method = activity.getClass().getMethod("startActionMode", ActionMode.Callback.class);
-            actionMode = (ActionMode) method.invoke(activity, owner);
+//            actionMode = (ActionMode) method.invoke(activity, owner);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -39,24 +39,24 @@ public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
 
     @Override
     protected void finishActionMode() {
-        if (actionMode != null) {
-            actionMode.finish();
-            imageView.setVisibility(View.VISIBLE);
-        }
+//        if (actionMode != null) {
+//            actionMode.finish();
+//        }
     }
 
     @Override
     protected void setActionModeTitle(String title) {
-        actionMode.setTitle(title);
+//        actionMode.setTitle(title);
     }
 
     @Override
     protected boolean isActionModeStarted() {
-        return actionMode != null;
+//        return actionMode != null;
+    return false;
     }
 
     @Override
     protected void clearActionMode() {
-        actionMode = null;
+//        actionMode = null;
     }
 }

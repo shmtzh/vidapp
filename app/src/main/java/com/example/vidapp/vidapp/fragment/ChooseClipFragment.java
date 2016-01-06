@@ -71,8 +71,10 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
 
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
         List<Bitmap> list = convertFileToBitMap(searchForVideoFiles());
+
         cancel = (ImageView) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
+
         adapter = new MultipleSelectionGridAdapter(savedInstanceState, list);
         adapter.setAdapterView(gridView);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,7 +89,7 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
 
 
     public ArrayList<File> searchForVideoFiles() {
-        final String dirPath = Environment.getRootDirectory().getParent() + "sdcard/DCIM";
+        final String dirPath = Environment.getRootDirectory().getParent() + "sdcard";
         File dir = new File(dirPath);
         files = getListFiles(new File(dirPath));
         Log.d(TAG, String.valueOf(files.size()));

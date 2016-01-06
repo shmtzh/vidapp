@@ -69,7 +69,7 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
 
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
-            helper.onDestroyActionMode();
+//            helper.onDestroyActionMode();
         }
 
         @Override
@@ -79,7 +79,8 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
 
         @Override
         public String getActionModeTitle(int count) {
-            return helper.getActionModeTitle(count);
+//            return helper.getActionModeTitle(count);
+         return "";
         }
 
         @Override

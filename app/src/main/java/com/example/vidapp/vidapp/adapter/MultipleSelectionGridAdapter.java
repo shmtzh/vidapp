@@ -35,11 +35,9 @@ public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
         }
-//        ImageView imageView = (ImageView) convertView;
         ImageView imageView = (ImageView) convertView.findViewById(R.id.test);
         imageView.setImageBitmap(list.get(position));
         return imageView;
-
     }
 
     @Override

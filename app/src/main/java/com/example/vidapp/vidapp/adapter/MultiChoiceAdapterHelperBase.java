@@ -102,9 +102,9 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
         if (wasSelected) {
             return;
         }
-        if (!isActionModeStarted()) {
-            startActionMode();
-        }
+//        if (!isActionModeStarted()) {
+//            startActionMode();
+//        }
         checkedItems.add((long) handle);
         owner.notifyDataSetChanged();
         onItemSelectedStateChanged();
@@ -116,10 +116,10 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
             return;
         }
         checkedItems.remove(handle);
-        if (getCheckedItemCount() == 0) {
-            finishActionMode();
-            return;
-        }
+//        if (getCheckedItemCount() == 0) {
+//            finishActionMode();
+//            return;
+//        }
         owner.notifyDataSetChanged();
         onItemSelectedStateChanged();
     }
