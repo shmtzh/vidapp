@@ -2,16 +2,14 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#606060</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#606060</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow_trans">#80FAFAD2</color>
     <color name="gray">#888888</color>
-
 
     <color name="mca__holo_blue_light">#ff33b5e5</color>
     <color name="mca__holo_blue_light_transparent">#7f33b5e5</color>
     <color name="mca__list_item_bg_normal">@android:color/transparent</color>
     <color name="mca__list_item_bg_checked">@color/mca__holo_blue_light</color>
     <color name="mca__list_item_bg_pressed">@color/mca__holo_blue_light</color>
-
 </resources>

@@ -16,7 +16,6 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
 
         private MultiChoiceAdapterHelper helper = new MultiChoiceAdapterHelper(this);
 
-
         public MultiChoiceBaseAdapter(Bundle savedInstanceState) {
             helper.restoreSelectionFromSavedInstanceState(savedInstanceState);
         }
@@ -68,18 +67,10 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
             return helper.getContext();
         }
 
-        //
-        // ActionMode.Callback implementation
-        //
-
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
             helper.onDestroyActionMode();
         }
-
-        //
-        // MultiChoiceAdapter implementation
-        //
 
         @Override
         public boolean isItemCheckable(int position) {
@@ -90,10 +81,6 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
         public String getActionModeTitle(int count) {
             return helper.getActionModeTitle(count);
         }
-
-        //
-        // BaseAdapter implementation
-        //
 
         @Override
         public final View getView(int position, View convertView, ViewGroup parent) {

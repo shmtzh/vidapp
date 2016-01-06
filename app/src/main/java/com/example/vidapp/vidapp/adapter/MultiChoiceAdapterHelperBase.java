@@ -23,7 +23,7 @@ import android.widget.ListView;
 import com.example.vidapp.vidapp.R;
 
 /**
- * Created by shmtzh on 1/4/16.
+  Created by shmtzh on 1/4/16.
  */
 public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickListener, OnItemClickListener, OnCheckedChangeListener {
     protected static final String TAG = MultiChoiceAdapterHelperBase.class.getSimpleName();
@@ -33,9 +33,7 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
     protected BaseAdapter owner;
     private OnItemClickListener itemClickListener;
     private Boolean itemIncludesCheckBox;
-    /*
-     * Defines what happens when an item is clicked and the action mode was already active
-     */
+
     private ItemClickInActionModePolicy itemClickInActionModePolicy = null;
     private boolean ignoreCheckedListener;
 
@@ -59,6 +57,7 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
     public void setAdapterView(AdapterView<? super BaseAdapter> adapterView) {
         this.adapterView = adapterView;
         checkActivity();
+
         adapterView.setOnItemLongClickListener(this);
         adapterView.setOnItemClickListener(this);
         adapterView.setAdapter(owner);
@@ -73,7 +72,7 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
     public void checkActivity() {
         Context context = getContext();
         if (context instanceof ListActivity) {
-            throw new RuntimeException("ListView cannot belong to an activity which subclasses ListActivity");
+            throw new RuntimeException("Li';li,kstView cannot belong to an activity which subclasses ListActivity");
         }
     }
 
@@ -192,25 +191,23 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-      return  onItemLongClick(position);
+        return onItemLongClick(position);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 //        if (isActionModeStarted()) {
-            switch (itemClickInActionModePolicy) {
-                case SELECT:
-                    onItemLongClick(adapterView, view, position, id);
-                    return;
-                case OPEN:
-                    finishActionMode();
-                    break;
-//                    onItemLongClick(adapterView, view, position, id);
-//                    return;
-                default:
-                    throw new RuntimeException("Invalid \"itemClickInActionMode\" value: " + itemClickInActionModePolicy);
-            }
+        switch (itemClickInActionModePolicy) {
+            case SELECT:
+                onItemLongClick(adapterView, view, position, id);
+                return;
+            case OPEN:
+                finishActionMode();
+                break;
+            default:
+                throw new RuntimeException("Invalid \"itemClickInActionMode\" value: " + itemClickInActionModePolicy);
+        }
 //        }
         if (itemClickListener != null) {
             itemClickListener.onItemClick(adapterView, view, position, id);
@@ -243,16 +240,11 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
         return position;
     }
 
-    //
-    // ActionMode.Callback related methods
-    //
-
     public void onDestroyActionMode() {
         checkedItems.clear();
         clearActionMode();
         owner.notifyDataSetChanged();
     }
-
 
     public View getView(int position, View viewWithoutSelection) {
         if (viewWithoutSelection instanceof Checkable) {

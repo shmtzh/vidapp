@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
@@ -22,7 +22,6 @@
     <style name="MultiChoiceAdapter_DefaultSelectedItemStyle">
         <item name="itemClickInActionMode">selectItem</item>
     </style>
-
 
     <style name="CheckableImageViewStyle">
         <item name="android:foreground">@drawable/plus</item>

@@ -19,7 +19,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 
 
 
-    CommunicationChannel mCommChListner;
+    CommunicationChannel mCommChListener;
 
 
     @Override
@@ -51,7 +51,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         super.onAttach(context);
         if(context instanceof CommunicationChannel)
         {
-            mCommChListner = (CommunicationChannel) context;
+            mCommChListener = (CommunicationChannel) context;
         }
         else
         {
@@ -61,7 +61,7 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
 
     public void sendMessage(int id)
     {
-        mCommChListner.setCommunication(id);
+        mCommChListener.setCommunication(id);
     }
 
 

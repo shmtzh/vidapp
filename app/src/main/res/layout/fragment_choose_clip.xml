@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:id="@+id/choose_clips"
         android:background="@drawable/chooseclips_back"
         android:padding="15dp"
         android:src="@drawable/chooseclips" />
@@ -30,6 +31,7 @@
         android:layout_height="60dp"
         android:background="@drawable/chooseclips_back"
         android:padding="15dp"
+        android:id="@+id/cancel"
         android:src="@drawable/cancel" />
 
 </LinearLayout>

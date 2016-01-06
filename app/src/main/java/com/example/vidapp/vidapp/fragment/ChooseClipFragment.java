@@ -17,27 +17,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.adapter.ChoosingClipAdapter;
 import com.example.vidapp.vidapp.adapter.MultipleSelectionGridAdapter;
+import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ChooseClipFragment extends Fragment {
+public class ChooseClipFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
+
+
+    CommunicationChannel mCommChListner;
 
     private OnFragmentInteractionListener mListener;
     ArrayList<File> files;
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
-//    ChoosingClipAdapter adapter;
-MultipleSelectionGridAdapter adapter;
+    //    ChoosingClipAdapter adapter;
+    ImageView cancel;
+    MultipleSelectionGridAdapter adapter;
+
     public ChooseClipFragment() {
     }
 
@@ -60,13 +68,11 @@ MultipleSelectionGridAdapter adapter;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_clip, container, false);
-//        final GridView gridview = (GridView) view.findViewById(R.id.gridview);
-//        adapter = new ChoosingClipAdapter(getActivity(), convertFileToBitMap(searchForVideoFiles()));
-//        gridview.setAdapter(adapter);
-
 
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
         List<Bitmap> list = convertFileToBitMap(searchForVideoFiles());
+        cancel = (ImageView) view.findViewById(R.id.cancel);
+        cancel.setOnClickListener(this);
         adapter = new MultipleSelectionGridAdapter(savedInstanceState, list);
         adapter.setAdapterView(gridView);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,25 +84,6 @@ MultipleSelectionGridAdapter adapter;
 
         return view;
     }
-
-//    myObjects = new ArrayList<GridObject>();
-//    for (String s : numbers) {
-//        myObjects.add(new GridObject(s, 0));
-//    }
-//
-//    gridView = (GridView) findViewById(R.id.gridView1);
-//
-//    myAdapter = new MyCustomAdapter(this);
-//
-//    gridView.setAdapter(myAdapter);
-//    gridView.setOnItemClickListener(new OnItemClickListener() {
-//
-//        @Override
-//        public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-//            myObjects.get(position).setState(1);
-//            myAdapter.notifyDataSetChanged();
-//        }
-//    });
 
 
     public ArrayList<File> searchForVideoFiles() {
@@ -118,13 +105,25 @@ MultipleSelectionGridAdapter adapter;
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.cancel:
+                sendMessage(3);
+                break;
+        }
+    }
+
+    @Override
+    public void onAttach(Context context)
+    {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
+        if(context instanceof CommunicationChannel)
+        {
+            mCommChListner = (CommunicationChannel) context;
+        }
+        else
+        {
+            throw new ClassCastException();
         }
     }
 
@@ -133,6 +132,12 @@ MultipleSelectionGridAdapter adapter;
         super.onDetach();
         mListener = null;
     }
+
+    public void sendMessage(int id)
+    {
+        mCommChListner.setCommunication(id);
+    }
+
 
 
     public interface OnFragmentInteractionListener {

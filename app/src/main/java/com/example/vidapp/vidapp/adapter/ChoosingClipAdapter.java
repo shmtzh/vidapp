@@ -70,16 +70,6 @@ public class ChoosingClipAdapter extends BaseAdapter {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-//        final View finalConvertView = convertView;
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//               holder.selection.setVisibility(View.VISIBLE);  }
-//        });
-
-
-
-
         return convertView;
     }
 

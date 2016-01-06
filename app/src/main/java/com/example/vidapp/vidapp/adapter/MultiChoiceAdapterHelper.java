@@ -2,7 +2,11 @@ package com.example.vidapp.vidapp.adapter;
 
 import android.app.Activity;
 import android.view.ActionMode;
+import android.view.View;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+
+import com.example.vidapp.vidapp.R;
 
 import java.lang.reflect.Method;
 
@@ -12,6 +16,7 @@ import java.lang.reflect.Method;
 public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
 
     private ActionMode actionMode;
+    ImageView imageView;
 
     protected MultiChoiceAdapterHelper(BaseAdapter owner) {
         super(owner);
@@ -21,6 +26,9 @@ public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
     protected void startActionMode() {
         try {
             Activity activity = (Activity) adapterView.getContext();
+            imageView = (ImageView) activity.findViewById(R.id.choose_clips);
+            imageView.setVisibility(View.GONE);
+
             Method method = activity.getClass().getMethod("startActionMode", ActionMode.Callback.class);
             actionMode = (ActionMode) method.invoke(activity, owner);
         } catch (Exception e) {
@@ -33,6 +41,7 @@ public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
     protected void finishActionMode() {
         if (actionMode != null) {
             actionMode.finish();
+            imageView.setVisibility(View.VISIBLE);
         }
     }
 
