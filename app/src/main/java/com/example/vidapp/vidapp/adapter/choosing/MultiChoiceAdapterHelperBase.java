@@ -1,4 +1,4 @@
-package com.example.vidapp.vidapp.adapter;
+package com.example.vidapp.vidapp.adapter.choosing;
 
 import java.util.HashSet;
 import java.util.Set;

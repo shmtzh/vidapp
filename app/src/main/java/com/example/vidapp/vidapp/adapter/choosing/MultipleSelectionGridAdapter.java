@@ -1,7 +1,6 @@
-package com.example.vidapp.vidapp.adapter;
+package com.example.vidapp.vidapp.adapter.choosing;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 

@@ -1,6 +1,5 @@
 package com.example.vidapp.vidapp.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
@@ -16,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
-import com.example.vidapp.vidapp.adapter.MultipleSelectionGridAdapter;
+import com.example.vidapp.vidapp.adapter.choosing.MultipleSelectionGridAdapter;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 import java.io.File;

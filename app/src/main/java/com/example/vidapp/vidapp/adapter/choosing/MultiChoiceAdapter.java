@@ -1,4 +1,4 @@
-package com.example.vidapp.vidapp.adapter;
+package com.example.vidapp.vidapp.adapter.choosing;
 
 import android.os.Bundle;
 import android.widget.AdapterView;
