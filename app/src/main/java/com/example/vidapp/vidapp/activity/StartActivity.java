@@ -1,20 +1,23 @@
 package com.example.vidapp.vidapp.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.fragment.ChooseClipFragment;
 import com.example.vidapp.vidapp.fragment.HelpFragment;
 import com.example.vidapp.vidapp.fragment.MyLibFragment;
+import com.example.vidapp.vidapp.fragment.OrderChoosingFragment;
+import com.example.vidapp.vidapp.fragment.ReorderClipsFragment;
 import com.example.vidapp.vidapp.fragment.StartFragment;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity implements CommunicationChannel {
 
@@ -52,7 +55,7 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
     }
 
     @Override
-    public void setCommunication(int id) {
+    public void setCommunication(int id, ArrayList<File> files) {
 
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -69,6 +72,12 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 break;
             case 3:
                 fragment = new StartFragment();
+                break;
+            case 4:
+                fragment = new ReorderClipsFragment(files);
+                break;
+            case 5:
+                fragment = new OrderChoosingFragment();
                 break;
         }
 

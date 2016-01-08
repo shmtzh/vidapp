@@ -29,8 +29,6 @@ import java.util.List;
 public class ChoosingClipAdapter extends BaseAdapter {
     private Context mContext;
     ArrayList<Bitmap> list;
-    View view;
-
 
     public ChoosingClipAdapter(Context c, ArrayList<Bitmap> list) {
         mContext = c;
@@ -58,7 +56,7 @@ public class ChoosingClipAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
 //        GridObject object = myObjects.get(position);
-       ViewHolder holder = null;
+        ViewHolder holder = null;
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

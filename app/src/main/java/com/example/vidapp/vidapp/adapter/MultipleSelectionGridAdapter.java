@@ -1,5 +1,7 @@
 package com.example.vidapp.vidapp.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -21,10 +23,13 @@ import java.util.List;
  */
 public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
     private List<Bitmap> list;
+    Activity activity;
+    ImageView image;
 
-    public MultipleSelectionGridAdapter(Bundle savedInstanceState, List<Bitmap> list) {
-        super(savedInstanceState);
+    public MultipleSelectionGridAdapter(Bundle savedInstanceState, List<Bitmap> list, Activity activity) {
+        super(savedInstanceState, activity);
         this.list = list;
+        this.activity = activity;
     }
 
 
@@ -35,6 +40,8 @@ public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(layout, parent, false);
         }
+
+        image = (ImageView) activity.findViewById(R.id.done_button);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.test);
         imageView.setImageBitmap(list.get(position));
         return imageView;
@@ -59,7 +66,15 @@ public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         MenuInflater inflater = mode.getMenuInflater();
         inflater.inflate(R.menu.menu_start, menu);
+        image.setVisibility(View.VISIBLE);
         return true;
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+        super.onDestroyActionMode(mode);
+        image.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -69,10 +84,6 @@ public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
 
     @Override
     public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//        if (item.getItemId() == R.id.) {
-            Toast.makeText(getContext(), "Share", Toast.LENGTH_SHORT).show();
-            return true;
-//        }
-//        return false;
+        return true;
     }
 }

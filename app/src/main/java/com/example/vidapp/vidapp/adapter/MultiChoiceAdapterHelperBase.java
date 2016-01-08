@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -26,7 +27,7 @@ import com.example.vidapp.vidapp.R;
   Created by shmtzh on 1/4/16.
  */
 public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickListener, OnItemClickListener, OnCheckedChangeListener {
-    protected static final String TAG = MultiChoiceAdapterHelperBase.class.getSimpleName();
+    protected final String TAG = getClass().getSimpleName();
     private static final String BUNDLE_KEY = "mca__selection";
     private Set<Long> checkedItems = new HashSet<Long>();
     protected AdapterView<? super MultiChoiceBaseAdapter> adapterView;
@@ -50,6 +51,7 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
         if (array != null) {
             for (long id : array) {
                 checkedItems.add(id);
+                Log.d(TAG, String.valueOf(id));
             }
         }
     }
@@ -106,6 +108,7 @@ public abstract class MultiChoiceAdapterHelperBase implements OnItemLongClickLis
 //            startActionMode();
 //        }
         checkedItems.add((long) handle);
+        Log.d(TAG, String.valueOf(handle));
         owner.notifyDataSetChanged();
         onItemSelectedStateChanged();
     }

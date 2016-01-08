@@ -11,12 +11,14 @@ import android.widget.ImageView;
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
+import java.io.File;
+import java.util.ArrayList;
+
 
 public class HelpFragment extends Fragment implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
     ImageView homeButton;
-
 
 
     CommunicationChannel mCommChListener;
@@ -40,28 +42,23 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.home_image_view:
-                sendMessage(3);
+                sendMessage(3, null);
                 break;
         }
     }
 
     @Override
-    public void onAttach(Context context)
-    {
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if(context instanceof CommunicationChannel)
-        {
+        if (context instanceof CommunicationChannel) {
             mCommChListener = (CommunicationChannel) context;
-        }
-        else
-        {
+        } else {
             throw new ClassCastException();
         }
     }
 
-    public void sendMessage(int id)
-    {
-        mCommChListener.setCommunication(id);
+    public void sendMessage(int id, ArrayList<File> files) {
+        mCommChListener.setCommunication(id, files);
     }
 
 

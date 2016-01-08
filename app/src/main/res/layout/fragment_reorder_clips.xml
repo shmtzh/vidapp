@@ -1,0 +1,99 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.vidapp.vidapp.fragment.ReorderClipsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="5"
+            android:background="@drawable/start_back"
+            android:padding="13dp"
+            android:src="@drawable/selected_clips" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:background="@drawable/chooseclips_back"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:id="@+id/add_image"
+            android:src="@drawable/plus" />
+
+        <ImageView
+            android:id="@+id/add_label"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="2"
+            android:background="@drawable/chooseclips_back"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/add_clips" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/gridview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            android:columnWidth="90dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="10dp" />
+
+        <ImageView
+            android:id="@+id/done_button"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/chooseclips_back"
+            android:padding="15dp"
+            android:src="@drawable/done"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <ImageView
+            android:id="@+id/home_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="60dp"
+            android:background="@drawable/chooseclips_back"
+            android:padding="15dp"
+            android:src="@drawable/home" />
+
+        <ImageView
+            android:id="@+id/make_movie"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="60dp"
+            android:background="@drawable/start_back"
+            android:padding="15dp"
+            android:src="@drawable/make_movie" />
+    </LinearLayout>
+</LinearLayout>

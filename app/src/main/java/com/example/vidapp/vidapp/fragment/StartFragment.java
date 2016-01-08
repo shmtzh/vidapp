@@ -18,6 +18,9 @@ import android.widget.Toast;
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
+import java.io.File;
+import java.util.ArrayList;
+
 
 public class StartFragment extends Fragment implements View.OnClickListener {
 
@@ -26,8 +29,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     ImageView startImageView, helpImageView, mylibImageView;
 
     CommunicationChannel mCommChListener = null;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,11 +61,11 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.help_image_view:
-                sendMessage(1);
+                sendMessage(1, null);
                 break;
 
             case R.id.mylib_image_view:
-                sendMessage(2);
+                sendMessage(2, null);
                 break;
 
         }
@@ -74,7 +75,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     {
 
         if (isReadPermissionGranted()) {
-            sendMessage(0);
+            sendMessage(0, null);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -94,7 +95,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
 
                 if (isReadPermissionGranted()){
-                    sendMessage(0);
+                    sendMessage(0, null);
                 }else{
                     Toast.makeText(getActivity(), "deny", Toast.LENGTH_LONG).show();
                     getActivity().finish();
@@ -124,9 +125,9 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         return permissionCheck == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void sendMessage(int id)
+    public void sendMessage(int id, ArrayList<File> files)
     {
-        mCommChListener.setCommunication(id);
+        mCommChListener.setCommunication(id, files);
     }
 
 

@@ -12,4 +12,5 @@
     <color name="mca__list_item_bg_normal">@android:color/transparent</color>
     <color name="mca__list_item_bg_checked">@color/mca__holo_blue_light</color>
     <color name="mca__list_item_bg_pressed">@color/mca__holo_blue_light</color>
+    <color name="black">#80000000</color>
 </resources>

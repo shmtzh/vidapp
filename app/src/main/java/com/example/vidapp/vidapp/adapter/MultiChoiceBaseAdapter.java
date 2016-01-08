@@ -1,5 +1,6 @@
 package com.example.vidapp.vidapp.adapter;
 
+import android.app.Activity;
 import android.widget.BaseAdapter;
 import java.util.Set;
 
@@ -14,9 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements android.view.ActionMode.Callback, MultiChoiceAdapter {
 
-        private MultiChoiceAdapterHelper helper = new MultiChoiceAdapterHelper(this);
+        private MultiChoiceAdapterHelper helper;
 
-        public MultiChoiceBaseAdapter(Bundle savedInstanceState) {
+        public MultiChoiceBaseAdapter(Bundle savedInstanceState, Activity activity) {
+            helper = new MultiChoiceAdapterHelper(this, activity);
             helper.restoreSelectionFromSavedInstanceState(savedInstanceState);
         }
 
@@ -69,7 +71,7 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
 
         @Override
         public void onDestroyActionMode(android.view.ActionMode mode) {
-//            helper.onDestroyActionMode();
+            helper.onDestroyActionMode();
         }
 
         @Override

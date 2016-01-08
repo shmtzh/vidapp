@@ -10,25 +10,21 @@ import com.example.vidapp.vidapp.R;
 
 import java.lang.reflect.Method;
 
-/**
-  Created by shmtzh on 1/4/16.
- */
+
 public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
 
-//    private ActionMode actionMode;
+    Activity activity;
     ImageView imageView;
 
-    protected MultiChoiceAdapterHelper(BaseAdapter owner) {
+    protected MultiChoiceAdapterHelper(BaseAdapter owner, Activity activity) {
         super(owner);
+        this.activity = activity;
     }
 
     @Override
     protected void startActionMode() {
         try {
             Activity activity = (Activity) adapterView.getContext();
-            imageView = (ImageView) activity.findViewById(R.id.choose_clips);
-            imageView.setVisibility(View.GONE);
-
             Method method = activity.getClass().getMethod("startActionMode", ActionMode.Callback.class);
 //            actionMode = (ActionMode) method.invoke(activity, owner);
         } catch (Exception e) {
@@ -42,17 +38,25 @@ public class MultiChoiceAdapterHelper extends MultiChoiceAdapterHelperBase {
 //        if (actionMode != null) {
 //            actionMode.finish();
 //        }
+        imageView.setVisibility(View.GONE);
+
+
     }
 
     @Override
     protected void setActionModeTitle(String title) {
 //        actionMode.setTitle(title);
+        imageView = (ImageView) activity.findViewById(R.id.done_button);
+        imageView.setVisibility(View.VISIBLE);
+
     }
 
     @Override
     protected boolean isActionModeStarted() {
 //        return actionMode != null;
-    return false;
+        imageView.setVisibility(View.GONE);
+
+        return false;
     }
 
     @Override
