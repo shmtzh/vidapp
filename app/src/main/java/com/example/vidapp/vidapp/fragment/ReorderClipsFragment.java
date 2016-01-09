@@ -9,13 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
-import com.example.vidapp.vidapp.adapter.choosing.MultipleSelectionGridAdapter;
+import com.example.vidapp.vidapp.adapter.reordering.DynamicGridView;
+import com.example.vidapp.vidapp.adapter.reordering.ReorderingAdapter;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 import java.io.File;
@@ -33,7 +31,8 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
     ImageView makeMovie;
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
     ArrayList<File> files = new ArrayList<>();
-    MultipleSelectionGridAdapter adapter;
+    ReorderingAdapter adapter;
+    DynamicGridView gridView;
 
     public ReorderClipsFragment() {
     }
@@ -47,9 +46,12 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_reorder_clips, container, false);
 
-        GridView gridView = (GridView) view.findViewById(R.id.gridview);
+       gridView = (DynamicGridView) view.findViewById(R.id.dynamicgridview);
         List<Bitmap> list = convertFileToBitMap(files);
 
+        adapter = new ReorderingAdapter(getActivity(), list, list.size());
+        gridView.setAdapter(adapter);
+        gridView.startEditMode();
 
         home = (ImageView) view.findViewById(R.id.home_button);
         add = (ImageView) view.findViewById(R.id.add_image);
@@ -60,15 +62,6 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
         add.setOnClickListener(this);
         plus.setOnClickListener(this);
         makeMovie.setOnClickListener(this);
-
-        adapter = new MultipleSelectionGridAdapter(savedInstanceState, list, getActivity());
-        adapter.setAdapterView(gridView);
-        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(getActivity(), "Item click: " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         return view;
     }
@@ -110,6 +103,7 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.make_movie:
                 sendMessage(5, null);
+                gridView.stopEditMode();
                 break;
         }
     }
