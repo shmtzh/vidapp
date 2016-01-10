@@ -14,6 +14,7 @@ import com.example.vidapp.vidapp.fragment.MyLibFragment;
 import com.example.vidapp.vidapp.fragment.OrderChoosingFragment;
 import com.example.vidapp.vidapp.fragment.ReorderClipsFragment;
 import com.example.vidapp.vidapp.fragment.StartFragment;
+import com.example.vidapp.vidapp.fragment.StrictOrderFragment;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 
 import java.io.File;
@@ -42,14 +43,6 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -76,7 +69,13 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 fragment = new ReorderClipsFragment(files);
                 break;
             case 5:
-                fragment = new OrderChoosingFragment();
+                fragment = new OrderChoosingFragment(files);
+                break;
+            case 6:
+                fragment = new StrictOrderFragment(files, false);
+                break;
+            case 7:
+                fragment = new StrictOrderFragment(files, true);
                 break;
         }
 

@@ -112,7 +112,7 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
                     if (items.contains(Long.valueOf(i))) selected_files.add(files.get(i));
                 }
                 Log.d(TAG, String.valueOf(selected_files.size()) + " items in the selected array");
-                sendMessage(4, selected_files);
+                sendMessage(5, selected_files);
                 break;
         }
     }
