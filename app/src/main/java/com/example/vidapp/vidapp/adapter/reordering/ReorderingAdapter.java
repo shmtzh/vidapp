@@ -45,7 +45,6 @@ List<Bitmap> items = new ArrayList<>();
         }
 
         void build(int position) {
-//            image.setImageResource(R.drawable.plus);
         image.setImageBitmap(items.get(position));
         }
     }
