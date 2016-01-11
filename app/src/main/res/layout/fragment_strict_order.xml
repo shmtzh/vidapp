@@ -18,13 +18,13 @@
             android:src="@drawable/selected_clips" />
 
         <ImageView
+            android:id="@+id/add_image"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:background="@drawable/chooseclips_back"
             android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:id="@+id/add_image"
             android:src="@drawable/plus" />
 
         <ImageView
@@ -72,8 +72,8 @@
         <ImageView
             android:id="@+id/home_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:background="@drawable/chooseclips_back"
             android:padding="15dp"
             android:src="@drawable/home" />
@@ -81,8 +81,8 @@
         <ImageView
             android:id="@+id/make_movie"
             android:layout_width="0dp"
-            android:layout_weight="3"
             android:layout_height="60dp"
+            android:layout_weight="3"
             android:background="@drawable/start_back"
             android:padding="15dp"
             android:src="@drawable/make_movie" />

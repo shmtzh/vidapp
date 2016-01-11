@@ -25,10 +25,7 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
     private final String TAG = getClass().getSimpleName();
 
     CommunicationChannel mCommChListener;
-    ImageView home;
-    ImageView add;
-    ImageView plus;
-    ImageView makeMovie;
+    ImageView home, add, plus, makeMovie;
     ArrayList<Bitmap> thumbnails = new ArrayList<>();
     ArrayList<File> files = new ArrayList<>();
     ReorderingAdapter adapter;
