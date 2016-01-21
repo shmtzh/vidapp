@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.vidapp.vidapp.fragment.HelpFragment">
 
-    <ImageView
+    <VideoView
+        android:id="@+id/home_video_view"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/home_back"
         android:padding="15dp" />
 
 

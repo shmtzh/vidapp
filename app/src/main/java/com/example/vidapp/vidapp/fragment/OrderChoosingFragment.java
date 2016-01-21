@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,15 +21,10 @@ import java.util.ArrayList;
 public class OrderChoosingFragment extends Fragment implements View.OnClickListener {
 
     CommunicationChannel mCommChListener;
-    ArrayList<File> files = new ArrayList<>();
     ImageView viewCustom, viewRandom, viewDate;
+    ImageView home;
 
     public OrderChoosingFragment() {
-    }
-
-
-    public OrderChoosingFragment(ArrayList<File> files) {
-        this.files = files;
     }
 
 
@@ -40,7 +36,9 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
         viewCustom = (ImageView) view.findViewById(R.id.button_custom);
         viewRandom = (ImageView) view.findViewById(R.id.button_random);
         viewDate = (ImageView) view.findViewById(R.id.button_date);
+        home = (ImageView) view.findViewById(R.id.home_button);
 
+        home.setOnClickListener(this);
         viewCustom.setOnClickListener(this);
         viewRandom.setOnClickListener(this);
         viewDate.setOnClickListener(this);
@@ -64,22 +62,28 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.button_custom:
-                sendMessage(4, files);
-                break;
-            case R.id.button_date:
-                sendMessage(6, files);
-                break;
-            case R.id.button_random:
-                sendMessage(7, files);
-                break;
-        }
+    public void onClick(final View v) {
+
+
+                switch (v.getId()) {
+                    case R.id.button_custom:
+                        sendMessage(4);
+                        break;
+                    case R.id.button_date:
+                        sendMessage(6);
+                        break;
+                    case R.id.button_random:
+                        sendMessage(7);
+                        break;
+                    case R.id.home_button:
+                        sendMessage(3);
+                }
+
+
     }
 
-    public void sendMessage(int id, ArrayList<File> files) {
-        mCommChListener.setCommunication(id, files);
+    public void sendMessage(int id) {
+        mCommChListener.setCommunication(id);
     }
 
 

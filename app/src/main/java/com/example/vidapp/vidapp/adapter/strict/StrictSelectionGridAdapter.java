@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.model.VideoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,10 @@ import java.util.List;
   Created by shmtzh on 1/10/16.
  */
 public class StrictSelectionGridAdapter extends BaseAdapter {
-    List<Bitmap> list = new ArrayList<>();
+    List<VideoModel> list = new ArrayList<>();
     Context context;
 
-    public StrictSelectionGridAdapter(List<Bitmap> list, FragmentActivity activity) {
+    public StrictSelectionGridAdapter(List<VideoModel> list, FragmentActivity activity) {
         this.list = list;
         this.context = activity.getApplicationContext();
     }
@@ -64,7 +65,7 @@ public class StrictSelectionGridAdapter extends BaseAdapter {
         }
 
         void build(int position) {
-            image.setImageBitmap(list.get(position));
+            image.setImageBitmap(list.get(position).getBitmap());
         }
     }
 }

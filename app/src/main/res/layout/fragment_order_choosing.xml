@@ -17,27 +17,7 @@
             android:padding="13dp"
             android:src="@drawable/selected_clips" />
 
-        <ImageView
-            android:id="@+id/add_image"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="@drawable/chooseclips_back"
-            android:paddingBottom="15dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/plus" />
 
-        <ImageView
-            android:id="@+id/add_label"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="2"
-            android:background="@drawable/chooseclips_back"
-            android:paddingBottom="15dp"
-            android:paddingEnd="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="15dp"
-            android:src="@drawable/add_clips" />
     </LinearLayout>
 
 
@@ -90,13 +70,6 @@
             android:padding="15dp"
             android:src="@drawable/home" />
 
-        <ImageView
-            android:id="@+id/make_movie"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_weight="3"
-            android:background="@drawable/start_back"
-            android:padding="15dp"
-            android:src="@drawable/make_movie" />
+
     </LinearLayout>
 </LinearLayout>

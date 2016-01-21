@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.model.VideoModel;
 
 import java.util.List;
 
@@ -20,11 +21,12 @@ import java.util.List;
   Created by shmtzh on 1/4/16.
  */
 public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
-    private List<Bitmap> list;
+//    private List<Bitmap> list;
+    private  List<VideoModel> list;
     Activity activity;
     ImageView image;
 
-    public MultipleSelectionGridAdapter(Bundle savedInstanceState, List<Bitmap> list, Activity activity) {
+    public MultipleSelectionGridAdapter(Bundle savedInstanceState, List<VideoModel> list, Activity activity) {
         super(savedInstanceState, activity);
         this.list = list;
         this.activity = activity;
@@ -41,7 +43,7 @@ public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
 
         image = (ImageView) activity.findViewById(R.id.done_button);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.test);
-        imageView.setImageBitmap(list.get(position));
+        imageView.setImageBitmap(list.get(position).getBitmap());
         return imageView;
     }
 

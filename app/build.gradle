@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
 
+
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
         applicationId "com.example.vidapp.vidapp"
@@ -17,12 +18,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/maven/org.bytedeco.javacpp-presets/ffmpeg/pom.properties'
+        exclude 'META-INF/maven/org.bytedeco.javacpp-presets/ffmpeg/pom.xml'
+        exclude 'META-INF/maven/org.bytedeco.javacpp-presets/opencv/pom.properties'
+        exclude 'META-INF/maven/org.bytedeco.javacpp-presets/opencv/pom.xml'
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'org.bytedeco.javacpp-presets:opencv:3.0.0-1.1'
+    compile 'org.bytedeco.javacpp-presets:ffmpeg:2.8.1-1.1'
+
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
+    compile 'org.bytedeco.javacpp-presets:opencv:3.0.0-1.1'
+    compile 'org.bytedeco.javacpp-presets:ffmpeg:2.8.1-1.1'
+    compile 'org.bytedeco:javacv:1.1'
     compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.googlecode.mp4parser:isoparser:1.0-RC-27'
 }

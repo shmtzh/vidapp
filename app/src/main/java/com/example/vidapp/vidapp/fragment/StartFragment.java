@@ -61,11 +61,11 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.help_image_view:
-                sendMessage(1, null);
+                sendMessage(1);
                 break;
 
             case R.id.mylib_image_view:
-                sendMessage(2, null);
+                sendMessage(2);
                 break;
 
         }
@@ -75,7 +75,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     {
 
         if (isReadPermissionGranted()) {
-            sendMessage(0, null);
+            sendMessage(0);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -95,7 +95,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
 
                 if (isReadPermissionGranted()){
-                    sendMessage(0, null);
+                    sendMessage(0);
                 }else{
                     Toast.makeText(getActivity(), "deny", Toast.LENGTH_LONG).show();
                     getActivity().finish();
@@ -125,9 +125,9 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         return permissionCheck == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void sendMessage(int id, ArrayList<File> files)
+    public void sendMessage(int id)
     {
-        mCommChListener.setCommunication(id, files);
+        mCommChListener.setCommunication(id);
     }
 
 

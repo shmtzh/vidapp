@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.model.VideoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,9 @@ import java.util.List;
   Created by shmtzh on 1/9/16.
  */
 public class ReorderingAdapter extends BaseDynamicGridAdapter {
-List<Bitmap> items = new ArrayList<>();
+List<VideoModel> items = new ArrayList<>();
 
-    public ReorderingAdapter(Context context, List<Bitmap> items, int columnCount) {
+    public ReorderingAdapter(Context context, List<VideoModel> items, int columnCount) {
         super(context, items, columnCount);
         this.items = items;
     }
@@ -45,7 +46,7 @@ List<Bitmap> items = new ArrayList<>();
         }
 
         void build(int position) {
-        image.setImageBitmap(items.get(position));
+        image.setImageBitmap(items.get(position).getBitmap());
         }
     }
 }
