@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by shmtzh on 1/19/16.
+  Created by shmtzh on 1/19/16.
  */
 public class TrimVideoUtils {
 

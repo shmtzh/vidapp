@@ -25,6 +25,7 @@ import com.example.vidapp.vidapp.model.VideoModel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,9 +35,7 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
     private final String TAG = getClass().getSimpleName();
 
     CommunicationChannel mCommChListener;
-    //    ArrayList<File> files;
     ArrayList<VideoModel> list = new ArrayList<>();
-    //    ArrayList<Bitmap> thumbnails = new ArrayList<>();
     ImageView cancel;
     ImageView done;
     MultipleSelectionGridAdapter adapter;
@@ -67,7 +66,7 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
             }
         });
 
-        StartActivity.selectedList.clear();
+//        StartActivity.selectedList.clear();
 
         return view;
     }
@@ -84,12 +83,21 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
                 Log.d(TAG, String.valueOf(adapter.getCheckedItems()));
                 Set<Long> items = adapter.getCheckedItems();
                 for (int i = 0; i < list.size(); i++) {
-                    if (items.contains(Long.valueOf(i))) StartActivity.selectedList.add(list.get(i));
+                    if (items.contains(Long.valueOf(i)))
+                        StartActivity.selectedList.add(list.get(i));
+                    removeDuplicates();
                 }
                 Log.d(TAG, String.valueOf(StartActivity.selectedList.size()) + " items in the selected array");
                 sendMessage(5);
                 break;
         }
+    }
+
+    public void removeDuplicates() {
+        Set<VideoModel> hs = new HashSet<>();
+        hs.addAll(StartActivity.selectedList);
+        StartActivity.selectedList.clear();
+        StartActivity.selectedList.addAll(hs);
     }
 
     @Override

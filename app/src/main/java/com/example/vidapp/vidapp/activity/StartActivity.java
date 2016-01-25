@@ -138,13 +138,11 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
     public ArrayList<VideoModel> convertFileToBitMap(ArrayList<File> files) {
         for (int i = 0; i < files.size(); i++) {
-
             list.add(i, new VideoModel(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
                     MediaStore.Images.Thumbnails.MINI_KIND), files.get(i)));
         }
         return list;
     }
-
 
     private ArrayList<File> getListFiles(File parentDir) {
         ArrayList<File> inFiles = new ArrayList<File>();

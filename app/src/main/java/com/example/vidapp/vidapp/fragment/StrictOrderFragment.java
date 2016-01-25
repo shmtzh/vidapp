@@ -50,9 +50,6 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
             long seed = System.nanoTime();
             Collections.shuffle(list, new Random(seed));
             Collections.shuffle(list, new Random(seed));
-
-        } else {
-
         }
 
         home = (ImageView) view.findViewById(R.id.home_button);
@@ -81,7 +78,7 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
     @Override
     public void onPause() {
         super.onPause();
-        gridView.setAdapter(null);
+//        gridView.setAdapter(null);
 
     }
 
@@ -115,7 +112,7 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
                 sendMessage(0);
                 break;
             case R.id.make_movie:
-//                sendMessage(5, null);
+                sendMessage(8);
                 break;
         }
     }
