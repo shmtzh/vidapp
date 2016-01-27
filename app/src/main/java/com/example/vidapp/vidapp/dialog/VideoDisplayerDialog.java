@@ -18,7 +18,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,14 +52,10 @@ public class VideoDisplayerDialog extends DialogFragment implements View.OnClick
     int timeInMilliseconds = 0;
     int timeSwapBuff = 0;
     int updatedTime = 0;
-    int secs, mins, milliseconds;
     ArrayList<CutModel> toCutModel = new ArrayList<>();
 
-    private VideoView mVideoView;
-    private Context mContext;
     private Uri mUri;
     private final Handler mHandler = new Handler();
-    public ProgressDialog mProgress;
     private int mTrimStartTime = 0;
     private int mTrimEndTime = 0;
     private String mSaveFileName = null;
@@ -68,12 +63,12 @@ public class VideoDisplayerDialog extends DialogFragment implements View.OnClick
     private File mSrcFile = null;
     private File mDstFile = null;
     private File mSaveDirectory = null;
-    // For showing the result.
     private String saveFolderName = null;
+    Context context;
 
-
-    public VideoDisplayerDialog(String path) {
+    public VideoDisplayerDialog(String path, Context context) {
         this.path = path;
+        this.context = context;
     }
 
     public VideoDisplayerDialog() {
@@ -221,7 +216,7 @@ public class VideoDisplayerDialog extends DialogFragment implements View.OnClick
                 values.put(MediaStore.Video.Media.RESOLUTION, cursor.getString(3));
             }
         });
-        return getActivity().getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+        return context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
     }
 
     private interface ContentResolverQueryCallback {
@@ -229,7 +224,7 @@ public class VideoDisplayerDialog extends DialogFragment implements View.OnClick
     }
 
     private void querySource(String[] projection, ContentResolverQueryCallback callback) {
-        ContentResolver contentResolver = getActivity().getContentResolver();
+        ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = null;
         try {
             cursor = contentResolver.query(mUri, projection, null, null, null);

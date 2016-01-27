@@ -1,8 +1,11 @@
 package com.example.vidapp.vidapp.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
@@ -10,12 +13,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.fragment.ChooseClipFragment;
@@ -34,6 +40,7 @@ import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity implements CommunicationChannel {
 
+    private  final int MY_PERMISSIONS_REQUEST_FILE = 19;
     static ArrayList<File> files;
     private final String TAG = getClass().getSimpleName();
     public static ArrayList<VideoModel> list = new ArrayList<>();
@@ -44,12 +51,57 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-
-        new FileScanning().execute();
+        checkFilePermission();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, new SplashFragment())
                 .commit();
     }
+
+
+    public void checkFilePermission() {
+
+        if (isFilePermissionGranted()) {
+            new FileScanning().execute();
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_FILE);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case MY_PERMISSIONS_REQUEST_FILE: {
+
+                if (isFilePermissionGranted()) {
+                    new FileScanning().execute();
+                } else {
+                    Toast.makeText(this, "deny", Toast.LENGTH_LONG).show();
+                    this.finish();
+                }
+                break;
+
+            }
+
+
+        }
+    }
+
+
+    boolean isFilePermissionGranted() {
+        int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permissionCheck == PackageManager.PERMISSION_GRANTED;
+    }
+
+
 
     @Override
     public void setCommunication(int id) {
@@ -121,27 +173,12 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
     }
 
 
-    public static void setSelectedFiles(ArrayList<VideoModel> selectedFiles) {
-        StartActivity.selectedList = selectedFiles;
-    }
-
-    public static void setFiles(ArrayList<File> files) {
-        StartActivity.files = files;
-    }
-
 
     public ArrayList<File> searchForVideoFiles() {
-        String internalStorage = System.getenv("EXTERNAL_STORAGE");
+//        String internalStorage = System.getenv("EXTERNAL_STORAGE");
+        String internalStorage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
         files = getListFiles(new File(internalStorage));
         return files;
-    }
-
-    public ArrayList<VideoModel> convertFileToBitMap(ArrayList<File> files) {
-        for (int i = 0; i < files.size(); i++) {
-            list.add(i, new VideoModel(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
-                    MediaStore.Images.Thumbnails.MINI_KIND), files.get(i)));
-        }
-        return list;
     }
 
     private ArrayList<File> getListFiles(File parentDir) {
@@ -158,6 +195,29 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         }
         return inFiles;
     }
+
+
+    public void deleteTempFiles() {
+        File dir = new File(System.getenv("EXTERNAL_STORAGE") + "/VidAppCuts/");
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
+            }
+        }
+    }
+
+
+    public ArrayList<VideoModel> convertFileToBitMap(ArrayList<File> files) {
+        for (int i = 0; i < files.size(); i++) {
+            list.add(i, new VideoModel(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
+                    MediaStore.Images.Thumbnails.MINI_KIND), files.get(i)));
+        }
+        return list;
+    }
+
 
 
     private class FileScanning extends AsyncTask<Void, Void, ArrayList<File>> {
@@ -182,6 +242,7 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
         @Override
         protected ArrayList<File> doInBackground(Void... arg0) {
+            deleteTempFiles();
 
             return searchForVideoFiles();
 

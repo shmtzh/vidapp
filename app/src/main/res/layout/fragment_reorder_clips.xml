@@ -62,6 +62,17 @@
             android:verticalSpacing="10dp" />
 
         <ImageView
+            android:id="@+id/start_button"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/chooseclips_back"
+            android:padding="15dp"
+            android:src="@drawable/start"
+            android:visibility="visible" />
+
+        <ImageView
             android:id="@+id/done_button"
             android:layout_width="100dp"
             android:layout_height="60dp"

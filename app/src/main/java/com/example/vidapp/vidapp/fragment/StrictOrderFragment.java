@@ -2,6 +2,7 @@ package com.example.vidapp.vidapp.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.activity.StartActivity;
@@ -17,6 +19,7 @@ import com.example.vidapp.vidapp.dialog.VideoDisplayerDialog;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 import com.example.vidapp.vidapp.model.VideoModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -29,6 +32,7 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
     ArrayList<VideoModel> list = new ArrayList<>();
     ImageView home, add, plus, makeMovie;
     GridView gridView;
+    static ArrayList<File> files;
 
     public StrictOrderFragment() {
 
@@ -67,19 +71,12 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VideoDisplayerDialog dialog = new VideoDisplayerDialog(list.get(position).getFile().getPath());
+                VideoDisplayerDialog dialog = new VideoDisplayerDialog(list.get(position).getFile().getPath(), getActivity());
                 dialog.show(getFragmentManager(), "VideoDisplayerDialog");
             }
         });
 
         return view;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-//        gridView.setAdapter(null);
-
     }
 
     @Override
@@ -92,12 +89,36 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
         }
     }
 
+    private boolean checkDirectory() {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        searchForVideoFiles();
+        return files != null;
+
     }
 
+    public ArrayList<File> searchForVideoFiles() {
+        String internalStorage = System.getenv("EXTERNAL_STORAGE") + "/VidAppCuts/";
+        files = getListFiles(new File(internalStorage));
+        return files;
+    }
+
+    private ArrayList<File> getListFiles(File parentDir) {
+        ArrayList<File> inFiles = new ArrayList<>();
+        File[] files = parentDir.listFiles();
+        if (files.length == 0) return null;
+        else {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    inFiles.addAll(getListFiles(file));
+                } else {
+                    if (file.getName().endsWith(".mp4")) {
+                        inFiles.add(file);
+                    }
+                }
+            }
+            return inFiles;
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -112,7 +133,9 @@ public class StrictOrderFragment extends Fragment implements View.OnClickListene
                 sendMessage(0);
                 break;
             case R.id.make_movie:
-                sendMessage(8);
+                if (checkDirectory()) sendMessage(8);
+                else
+                    Toast.makeText(getActivity(), "Edit any video before making movie", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

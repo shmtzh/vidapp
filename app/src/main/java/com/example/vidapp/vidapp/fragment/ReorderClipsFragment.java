@@ -27,7 +27,7 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
     private final String TAG = getClass().getSimpleName();
 
     CommunicationChannel mCommChListener;
-    ImageView home, add, plus, makeMovie;
+    ImageView home, add, plus, makeMovie, done, start;
     ArrayList<VideoModel> list = new ArrayList<>();
     ReorderingAdapter adapter;
     DynamicGridView gridView;
@@ -45,21 +45,23 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
 //
         adapter = new ReorderingAdapter(getActivity(), list, list.size());
         gridView.setAdapter(adapter);
-        gridView.startEditMode();
 
         home = (ImageView) view.findViewById(R.id.home_button);
         add = (ImageView) view.findViewById(R.id.add_image);
         plus = (ImageView) view.findViewById(R.id.add_label);
         makeMovie = (ImageView) view.findViewById(R.id.make_movie);
+        done = (ImageView) view.findViewById(R.id.done_button);
+        start = (ImageView) view.findViewById(R.id.start_button);
 
         home.setOnClickListener(this);
         add.setOnClickListener(this);
         plus.setOnClickListener(this);
         makeMovie.setOnClickListener(this);
+        start.setOnClickListener(this);
+        done.setOnClickListener(this);
 
         return view;
     }
-
 
 
     @Override
@@ -79,9 +81,19 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        gridView.stopEditMode();
+
 
         switch (v.getId()) {
+            case R.id.done_button:
+                gridView.stopEditMode();
+                start.setVisibility(View.VISIBLE);
+                done.setVisibility(View.GONE);
+                break;
+            case R.id.start_button:
+                gridView.startEditMode();
+                start.setVisibility(View.GONE);
+                done.setVisibility(View.VISIBLE);
+                break;
             case R.id.home_button:
                 sendMessage(3);
                 break;

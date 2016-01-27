@@ -38,11 +38,11 @@ VideoView helpVideo;
 
         View view = inflater.inflate(R.layout.fragment_help, container, false);
 
-        helpVideo = (VideoView) view.findViewById(R.id.home_video_view);
-        helpVideo.setMediaController(null);
-        helpVideo.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.help_video));  //Don't put extension
-        helpVideo.requestFocus(0);
-        helpVideo.start();
+//        helpVideo = (VideoView) view.findViewById(R.id.home_video_view);
+//        helpVideo.setMediaController(null);
+//        helpVideo.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.help_video));  //Don't put extension
+//        helpVideo.requestFocus(0);
+//        helpVideo.start();
         homeButton = (ImageView) view.findViewById(R.id.home_image_view);
         homeButton.setOnClickListener(this);
 

@@ -1,17 +1,55 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.MyLibFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:text="You have no videos yet" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.example.vidapp.vidapp.fragment.MyLibFragment">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/choose_clips"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/chooseclips_back"
+            android:padding="15dp"
+            android:src="@drawable/mymovies" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/listview_choosing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" />
+
+            <ImageView
+                android:id="@+id/done_button"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:layout_gravity="bottom|right"
+                android:layout_marginBottom="2dp"
+                android:background="@drawable/chooseclips_back"
+                android:padding="15dp"
+                android:src="@drawable/done"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/gohome"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/chooseclips_back"
+            android:padding="15dp"
+            android:src="@drawable/home" />
+
+    </LinearLayout>
