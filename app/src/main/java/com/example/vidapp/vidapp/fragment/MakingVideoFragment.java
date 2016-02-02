@@ -1,29 +1,47 @@
 package com.example.vidapp.vidapp.fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.coremedia.iso.IsoFile;
 import com.coremedia.iso.boxes.Container;
+import com.coremedia.iso.boxes.MovieHeaderBox;
+import com.coremedia.iso.boxes.TrackBox;
 import com.example.vidapp.vidapp.R;
+import com.example.vidapp.vidapp.activity.StartActivity;
+import com.example.vidapp.vidapp.adapter.finished.FinishedMoviesAdapter;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 import com.example.vidapp.vidapp.model.VideoModel;
 import com.googlecode.mp4parser.authoring.Movie;
+import com.googlecode.mp4parser.authoring.Mp4TrackImpl;
 import com.googlecode.mp4parser.authoring.Track;
 import com.googlecode.mp4parser.authoring.builder.DefaultMp4Builder;
 import com.googlecode.mp4parser.authoring.container.mp4.MovieCreator;
 import com.googlecode.mp4parser.authoring.tracks.AppendTrack;
+import com.googlecode.mp4parser.util.Matrix;
+import com.googlecode.mp4parser.util.Path;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
@@ -36,11 +54,10 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
     static ArrayList<String> paths = new ArrayList<>();
     static ArrayList<Movie> files = new ArrayList<>();
     String internalStorage;
-
-    public static ArrayList<VideoModel> list = new ArrayList<>();
     CommunicationChannel mCommChListener;
     EditText nameText;
     String nameCred;
+    private boolean isLeftLandscape = false, isRightLandscape = false;
 
     public MakingVideoFragment() {
     }
@@ -48,9 +65,7 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_making_video, container, false);
-
         nameText = (EditText) view.findViewById(R.id.new_video_name);
         nameText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -61,24 +76,19 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
                             return true;
                     }
                 }
-
                 return true;
             }
         });
-
         Button saveButton = (Button) view.findViewById(R.id.save);
         ImageView homeButton = (ImageView) view.findViewById(R.id.home_image_view);
-
         saveButton.setOnClickListener(this);
         homeButton.setOnClickListener(this);
-
         searchForVideoFiles();
         try {
             combineClips();
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             e.printStackTrace();
         }
-
         return view;
     }
 
@@ -86,7 +96,7 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
     public ArrayList<String> searchForVideoFiles() {
         internalStorage = System.getenv("EXTERNAL_STORAGE") + "/VidAppCuts";
         paths = getListFiles(new File(internalStorage));
-        Log.d(TAG, String.valueOf(paths.size()));
+        Log.d(TAG, String.valueOf(paths.size()) + "paths");
         return paths;
     }
 
@@ -108,16 +118,43 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
 
     protected void combineClips() throws IOException {
 
+        MediaMetadataRetriever m = new MediaMetadataRetriever();
+
+
         for (int i = 0; i < paths.size(); i++) {
-            Movie tm = MovieCreator.build(paths.get(i));
-            files.add(tm);
+            m.setDataSource(paths.get(i));
+            if (Build.VERSION.SDK_INT >= 17) {
+                String s = m.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
+                if (Integer.valueOf(s) == 0) {
+                    isLeftLandscape = true;
+                }
+                if (Integer.valueOf(s) == 180) {
+                    isRightLandscape = true;
+                }
+            }
         }
 
-        List<Track> videoTracks = new LinkedList<Track>();
-        List<Track> audioTracks = new LinkedList<Track>();
+        if (isLeftLandscape && isRightLandscape) {
+            for (int i = 0; i < paths.size(); i++) {
+                m.setDataSource(paths.get(i));
+                if (Build.VERSION.SDK_INT >= 17) {
+                    String s = m.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_ROTATION);
+                    if (Integer.valueOf(s) == 180)
+                        rotate(paths.get(i));
+                }
+            }
+        }
 
-        for (Movie m : files) {
-            for (Track t : m.getTracks()) {
+
+        for (int i = 0; i < paths.size(); i++) {
+            Movie tm = MovieCreator.build(paths.get(i));
+            Log.d(TAG, files.size() + "files");
+            files.add(tm);
+        }
+        List<Track> videoTracks = new ArrayList<Track>();
+        List<Track> audioTracks = new ArrayList<Track>();
+        for (Movie movie : files) {
+            for (Track t : movie.getTracks()) {
                 if (t.getHandler().equals("soun")) {
                     audioTracks.add(t);
                 }
@@ -126,27 +163,69 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
                 }
             }
         }
-
         Movie result = new Movie();
 
-
         if (audioTracks.size() > 0) {
-            Log.d(TAG, String.valueOf(audioTracks.size()));
+            Log.d(TAG, String.valueOf(audioTracks.size()) + "audi");
             result.addTrack(new AppendTrack(audioTracks.toArray(new Track[audioTracks.size()])));
         }
         if (videoTracks.size() > 0) {
+            Log.d(TAG, String.valueOf(audioTracks.size()) + "vide");
             result.addTrack(new AppendTrack(videoTracks.toArray(new Track[videoTracks.size()])));
         }
-
         Container out = new DefaultMp4Builder().build(result);
-
         String folder_main = "VidApp";
-
         File f = new File(Environment.getExternalStorageDirectory(), folder_main);
         if (!f.exists()) {
             f.mkdirs();
         }
+        FileChannel fc = new RandomAccessFile(String.format(System.getenv("EXTERNAL_STORAGE") + "/VidApp" + "/output.mp4"), "rw").getChannel();
+        out.writeContainer(fc);
 
+        fc.close();
+        while (!audioTracks.isEmpty()) {
+            audioTracks.remove(0);
+        }
+        while (!videoTracks.isEmpty()) {
+            videoTracks.remove(0);
+        }
+        while (!files.isEmpty()) {
+            files.remove(0);
+        }
+
+
+    }
+
+    public void convertFileToBitMap(File file) {
+        Log.d(TAG, file.getAbsolutePath());
+        StartActivity.libModels.add(
+                new VideoModel(
+                       ThumbnailUtils.createVideoThumbnail(file.getAbsolutePath(),
+                               MediaStore.Images.Thumbnails.MICRO_KIND), file));
+     }
+
+
+    public void rotate(String path) throws IOException {
+
+        IsoFile isoFile = new IsoFile(path);
+        Movie m = new Movie();
+
+        List<TrackBox> trackBoxes = isoFile.getMovieBox().getBoxes(
+                TrackBox.class);
+
+        for (TrackBox trackBox : trackBoxes) {
+
+            trackBox.getTrackHeaderBox().setMatrix(Matrix.ROTATE_0);
+            m.addTrack(new Mp4TrackImpl(trackBox));
+        }
+
+
+        Container out = new DefaultMp4Builder().build(m);
+        String folder_main = "VidApp";
+        File f = new File(Environment.getExternalStorageDirectory(), folder_main);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
         FileChannel fc = new RandomAccessFile(String.format(System.getenv("EXTERNAL_STORAGE") + "/VidApp" + "/output.mp4"), "rw").getChannel();
         out.writeContainer(fc);
         fc.close();
@@ -198,6 +277,7 @@ public class MakingVideoFragment extends Fragment implements View.OnClickListene
         nameCred = nameCred.replaceAll(" ", "_");
         File to = new File(sdcard, nameCred + ".mp4");
         from.renameTo(to);
+        convertFileToBitMap(to);
 
     }
 

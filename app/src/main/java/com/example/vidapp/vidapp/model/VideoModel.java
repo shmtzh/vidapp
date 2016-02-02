@@ -10,6 +10,7 @@ import java.io.File;
 public class VideoModel {
     private Bitmap bitmap;
     private File file;
+    private int orientation;
 
     public VideoModel(Bitmap bitmap, File file) {
         this.bitmap = bitmap;
@@ -30,5 +31,13 @@ public class VideoModel {
 
     public void setFile(File file) {
         this.file = file;
+    }
+
+    public int getOrientation() {
+        return orientation;
+    }
+
+    public void setOrientation(int orientation) {
+        this.orientation = orientation;
     }
 }

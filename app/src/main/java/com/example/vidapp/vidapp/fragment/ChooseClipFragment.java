@@ -48,26 +48,20 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_clip, container, false);
-
-        GridView gridView = (GridView) view.findViewById(R.id.gridview_choosing);
-
+        GridView grids = (GridView) view.findViewById(R.id.gridview_choosing);
         cancel = (ImageView) view.findViewById(R.id.cancel);
         cancel.setOnClickListener(this);
-
         done = (ImageView) view.findViewById(R.id.done_button);
         done.setOnClickListener(this);
         list = StartActivity.getList();
         adapter = new MultipleSelectionGridAdapter(savedInstanceState, list, getActivity());
-
-        adapter.setAdapterView(gridView);
+        adapter.setAdapterView(grids);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 Toast.makeText(getActivity(), "Item click: " + adapter.getItem(position), Toast.LENGTH_SHORT).show();
             }
         });
-
-//        StartActivity.selectedList.clear();
-
+        Log.d(TAG, "onCreate ");
         return view;
     }
 
@@ -110,11 +104,8 @@ public class ChooseClipFragment extends Fragment implements View.OnClickListener
         }
     }
 
-
     public void sendMessage(int id) {
         mCommChListener.setCommunication(id);
     }
-
-
 
 }

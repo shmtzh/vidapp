@@ -27,7 +27,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     private final String TAG = getClass().getSimpleName();
     ImageView startImageView, helpImageView, mylibImageView;
-
     CommunicationChannel mCommChListener = null;
 
     @Override
@@ -39,41 +38,33 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
-
         startImageView = (ImageView) view.findViewById(R.id.start_image_view);
         helpImageView = (ImageView) view.findViewById(R.id.help_image_view);
         mylibImageView = (ImageView) view.findViewById(R.id.mylib_image_view);
-
         startImageView.setOnClickListener(this);
         helpImageView.setOnClickListener(this);
         mylibImageView.setOnClickListener(this);
-
         return view;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.start_image_view:
                 checkPermission();
                 Log.d(TAG, "onClick");
                 break;
-
             case R.id.help_image_view:
                 sendMessage(1);
                 break;
-
             case R.id.mylib_image_view:
                 sendMessage(2);
                 break;
-
         }
     }
 
     public void checkPermission()
     {
-
         if (isReadPermissionGranted()) {
             sendMessage(0);
         } else {
@@ -93,7 +84,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
-
                 if (isReadPermissionGranted()){
                     sendMessage(0);
                 }else{
@@ -129,7 +119,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     {
         mCommChListener.setCommunication(id);
     }
-
 
 }
 

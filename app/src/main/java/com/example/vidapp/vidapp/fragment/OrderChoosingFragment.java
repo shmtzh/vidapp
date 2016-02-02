@@ -37,20 +37,16 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order_choosing, container, false);
         viewCustom = (ImageView) view.findViewById(R.id.button_custom);
         viewRandom = (ImageView) view.findViewById(R.id.button_random);
         viewDate = (ImageView) view.findViewById(R.id.button_date);
         home = (ImageView) view.findViewById(R.id.home_button);
-
         home.setOnClickListener(this);
         viewCustom.setOnClickListener(this);
         viewRandom.setOnClickListener(this);
         viewDate.setOnClickListener(this);
         checkFilePermission();
-
-
         return view;
     }
 
@@ -71,8 +67,6 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
 
     @Override
     public void onClick(final View v) {
-
-
         switch (v.getId()) {
             case R.id.button_custom:
                 sendMessage(4);
@@ -86,16 +80,12 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
             case R.id.home_button:
                 sendMessage(3);
         }
-
-
     }
 
     public void checkFilePermission() {
 
         if (isFilePermissionGranted()) {
-
             // FIXME: 1/26/16
-
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -111,19 +101,14 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-
             case MY_PERMISSIONS_REQUEST_FILE: {
-
                 if (isFilePermissionGranted()) {
                     // FIXME: 1/26/16
                 } else {
                     getActivity().finish();
                 }
                 break;
-
             }
-
-
         }
     }
 
@@ -138,6 +123,5 @@ public class OrderChoosingFragment extends Fragment implements View.OnClickListe
     public void sendMessage(int id) {
         mCommChListener.setCommunication(id);
     }
-
 
 }

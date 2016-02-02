@@ -1,6 +1,9 @@
 package com.example.vidapp.vidapp.adapter.reordering;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.example.vidapp.vidapp.model.VideoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,7 @@ public abstract class BaseDynamicGridAdapter extends AbstractDynamicGridAdapter 
 
     private Context mContext;
 
-    private ArrayList<Object> mItems = new ArrayList<Object>();
+    private ArrayList<VideoModel> mItems = new ArrayList<VideoModel>();
     private int mColumnCount;
 
     protected BaseDynamicGridAdapter(Context context, int columnCount) {
@@ -19,19 +22,19 @@ public abstract class BaseDynamicGridAdapter extends AbstractDynamicGridAdapter 
         this.mColumnCount = columnCount;
     }
 
-    public BaseDynamicGridAdapter(Context context, List<?> items, int columnCount) {
+    public BaseDynamicGridAdapter(Context context, ArrayList<VideoModel> items, int columnCount) {
         mContext = context;
         mColumnCount = columnCount;
         init(items);
     }
 
-    private void init(List<?> items) {
+    private void init(ArrayList<VideoModel> items) {
         addAllStableId(items);
         this.mItems.addAll(items);
     }
 
 
-    public void set(List<?> items) {
+    public void set(ArrayList<VideoModel> items) {
         clear();
         init(items);
         notifyDataSetChanged();
@@ -43,19 +46,19 @@ public abstract class BaseDynamicGridAdapter extends AbstractDynamicGridAdapter 
         notifyDataSetChanged();
     }
 
-    public void add(Object item) {
+    public void add(VideoModel item) {
         addStableId(item);
         mItems.add(item);
         notifyDataSetChanged();
     }
 
-    public void add(int position, Object item) {
+    public void add(int position, VideoModel item) {
         addStableId(item);
         mItems.add(position, item);
         notifyDataSetChanged();
     }
 
-    public void add(List<?> items) {
+    public void add(ArrayList<VideoModel> items) {
         addAllStableId(items);
         this.mItems.addAll(items);
         notifyDataSetChanged();
@@ -92,7 +95,7 @@ public abstract class BaseDynamicGridAdapter extends AbstractDynamicGridAdapter 
     @Override
     public void reorderItems(int originalPosition, int newPosition) {
         if (newPosition < getCount()) {
-            DynamicGridUtils.reorder(mItems, originalPosition, newPosition);
+            DynamicGridUtils.swap(mItems, originalPosition, newPosition);
             notifyDataSetChanged();
         }
     }
@@ -102,7 +105,7 @@ public abstract class BaseDynamicGridAdapter extends AbstractDynamicGridAdapter 
         return true;
     }
 
-    public List<Object> getItems() {
+    public ArrayList<VideoModel> getItems() {
         return mItems;
     }
 

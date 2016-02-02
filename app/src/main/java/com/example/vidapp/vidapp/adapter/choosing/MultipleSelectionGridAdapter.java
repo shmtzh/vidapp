@@ -21,7 +21,6 @@ import java.util.List;
   Created by shmtzh on 1/4/16.
  */
 public class MultipleSelectionGridAdapter extends MultiChoiceBaseAdapter {
-//    private List<Bitmap> list;
     private  List<VideoModel> list;
     Activity activity;
     ImageView image;

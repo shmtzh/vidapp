@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
@@ -35,16 +38,38 @@ import com.example.vidapp.vidapp.fragment.StartFragment;
 import com.example.vidapp.vidapp.fragment.StrictOrderFragment;
 import com.example.vidapp.vidapp.listener.CommunicationChannel;
 import com.example.vidapp.vidapp.model.VideoModel;
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity implements CommunicationChannel {
 
-    private  final int MY_PERMISSIONS_REQUEST_FILE = 19;
+    private final int MY_PERMISSIONS_REQUEST_FILE = 19;
     static ArrayList<File> files;
     private final String TAG = getClass().getSimpleName();
     public static ArrayList<VideoModel> list = new ArrayList<>();
     public static ArrayList<VideoModel> selectedList = new ArrayList<>();
+    public static int isVertical = 0;
+
+    public static ArrayList<File> libFiles = new ArrayList<>();
+    public static ArrayList<VideoModel> libModels = new ArrayList<>();
+
+    public static int getIsVertical() {
+        return isVertical;
+    }
+
+    public static void setIsVertical(int isVertical) {
+        StartActivity.isVertical = isVertical;
+    }
+
+    public static ArrayList<File> getLibFiles() {
+        return libFiles;
+    }
+
+    public static ArrayList<VideoModel> getLibModels() {
+        return libModels;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +87,8 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
         if (isFilePermissionGranted()) {
             new FileScanning().execute();
+            new LibFileScanning().execute();
+
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
@@ -102,7 +129,6 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
     }
 
 
-
     @Override
     public void setCommunication(int id) {
 
@@ -121,6 +147,8 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 break;
             case 3:
                 fragment = new StartFragment();
+                deleteTempFiles();
+                selectedList.clear();
                 break;
             case 4:
                 fragment = new ReorderClipsFragment();
@@ -136,6 +164,9 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 break;
             case 8:
                 fragment = new MakingVideoFragment();
+                break;
+            case 9:
+                fragment = new FinishedVideoDisplayingFragment();
                 break;
         }
 
@@ -173,9 +204,7 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
     }
 
 
-
     public ArrayList<File> searchForVideoFiles() {
-//        String internalStorage = System.getenv("EXTERNAL_STORAGE");
         String internalStorage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
         files = getListFiles(new File(internalStorage));
         return files;
@@ -199,11 +228,9 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
     public void deleteTempFiles() {
         File dir = new File(System.getenv("EXTERNAL_STORAGE") + "/VidAppCuts/");
-        if (dir.isDirectory())
-        {
+        if (dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++)
-            {
+            for (int i = 0; i < children.length; i++) {
                 new File(dir, children[i]).delete();
             }
         }
@@ -211,13 +238,56 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
 
     public ArrayList<VideoModel> convertFileToBitMap(ArrayList<File> files) {
+
         for (int i = 0; i < files.size(); i++) {
-            list.add(i, new VideoModel(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
-                    MediaStore.Images.Thumbnails.MINI_KIND), files.get(i)));
-        }
+           list.add(i,
+                    new VideoModel(
+                            Bitmap.createScaledBitmap(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
+                                    MediaStore.Images.Thumbnails.MICRO_KIND), 100, 100, true), files.get(i)));}
         return list;
     }
 
+
+    public ArrayList<File> libSearchForVideoFiles() {
+        String internalStorage = System.getenv("EXTERNAL_STORAGE") + "/VidApp";
+        libFiles = libGetListFiles(new File(internalStorage));
+        return libFiles;
+    }
+
+    public ArrayList<VideoModel> libConvertFileToBitMap(ArrayList<File> files) {
+        if (files == null) return null;
+        for (int i = 0; i < files.size(); i++) {
+            libModels.add(i, new VideoModel(ThumbnailUtils.createVideoThumbnail(files.get(i).getAbsolutePath(),
+                    MediaStore.Images.Thumbnails.MICRO_KIND), files.get(i)));
+        }
+        return libModels;
+    }
+
+
+    private ArrayList<File> libGetListFiles(File parentDir) {
+        ArrayList<File> inFiles = new ArrayList<>();
+        File[] inDirectory = parentDir.listFiles();
+        try {
+            if (inDirectory.length == 0) {
+                Log.d(TAG, "null");
+                return null;
+            } else {
+                Log.d(TAG, "not null");
+                for (File file : inDirectory) {
+                    if (file.isDirectory()) {
+                        inFiles.addAll(getListFiles(file));
+                    } else {
+                        if (file.getName().endsWith(".mp4")) {
+                            inFiles.add(file);
+                        }
+                    }
+                }
+                return inFiles;
+            }
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
 
 
     private class FileScanning extends AsyncTask<Void, Void, ArrayList<File>> {
@@ -229,7 +299,6 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         @Override
         protected void onPostExecute(ArrayList<File> result) {
             super.onPostExecute(result);
-
             files = result;
             new BitmapScanning().execute();
         }
@@ -243,14 +312,10 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         @Override
         protected ArrayList<File> doInBackground(Void... arg0) {
             deleteTempFiles();
-
             return searchForVideoFiles();
-
         }
 
     }
-
-
 
 
     private class BitmapScanning extends AsyncTask<Void, Void, ArrayList<VideoModel>> {
@@ -261,9 +326,7 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         @Override
         protected void onPostExecute(ArrayList<VideoModel> result) {
             super.onPostExecute(result);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, new StartFragment())
-                    .commit();
+
         }
 
         @Override
@@ -278,6 +341,62 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
 
     }
 
+    private class LibFileScanning extends AsyncTask<Void, Void, ArrayList<File>> {
+
+
+        public LibFileScanning() {
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<File> result) {
+            super.onPostExecute(result);
+
+            libFiles = result;
+            new LibBitmapScanning().execute();
+
+
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<File> doInBackground(Void... arg0) {
+            return libSearchForVideoFiles();
+        }
+
+    }
+
+
+    private class LibBitmapScanning extends AsyncTask<Void, Void, ArrayList<VideoModel>> {
+
+        public LibBitmapScanning() {
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<VideoModel> result) {
+            super.onPostExecute(result);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, new StartFragment())
+                    .commit();
+
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected ArrayList<VideoModel> doInBackground(Void... arg0) {
+            return libConvertFileToBitMap(libFiles);
+        }
+
+    }
 
 }
 

@@ -1,6 +1,9 @@
 package com.example.vidapp.vidapp.adapter.finished;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,9 @@ import android.widget.TextView;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.model.VideoModel;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +74,7 @@ public class FinishedMoviesAdapter extends BaseAdapter {
 
 
         void build(int position) {
+
             image.setImageBitmap(list.get(position).getBitmap());
             text.setText(list.get(position).getFile().getName());
         }

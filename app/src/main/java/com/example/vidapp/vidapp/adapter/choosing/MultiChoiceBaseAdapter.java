@@ -1,6 +1,7 @@
 package com.example.vidapp.vidapp.adapter.choosing;
 
 import android.app.Activity;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import java.util.Set;
 
@@ -8,7 +9,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 /**
   Created by shmtzh on 1/4/16.
@@ -81,7 +81,6 @@ public abstract class MultiChoiceBaseAdapter extends BaseAdapter implements andr
 
         @Override
         public String getActionModeTitle(int count) {
-//            return helper.getActionModeTitle(count);
          return "";
         }
 

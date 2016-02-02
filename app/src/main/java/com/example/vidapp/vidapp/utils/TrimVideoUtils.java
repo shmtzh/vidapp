@@ -33,15 +33,9 @@ public class TrimVideoUtils {
         double startTime = startMs / 1000;
         double endTime = endMs / 1000;
         boolean timeCorrected = false;
-        // Here we try to find a track that has sync samples. Since we can only start decoding
-        // at such a sample we SHOULD make sure that the start of the new fragment is exactly
-        // such a frame
         for (Track track : tracks) {
             if (track.getSyncSamples() != null && track.getSyncSamples().length > 0) {
                 if (timeCorrected) {
-                    // This exception here could be a false positive in case we have multiple tracks
-                    // with sync samples at exactly the same positions. E.g. a single movie containing
-                    // multiple qualities of the same video (Microsoft Smooth Streaming file)
                     throw new RuntimeException("The startTime has already been corrected by another track with SyncSample. Not Supported.");
                 }
                 startTime = correctTimeToSyncSample(track, startTime, false);
@@ -57,16 +51,12 @@ public class TrimVideoUtils {
             for (int i = 0; i < track.getDecodingTimeEntries().size(); i++) {
                 TimeToSampleBox.Entry entry = track.getDecodingTimeEntries().get(i);
                 for (int j = 0; j < entry.getCount(); j++) {
-                    // entry.getDelta() is the amount of time the current sample covers.
                     if (currentTime <= startTime) {
-                        // current sample is still before the new starttime
                         startSample = currentSample;
                     }
                     if (currentTime <= endTime) {
-                        // current sample is after the new start time and still before the new endtime
                         endSample = currentSample;
                     } else {
-                        // current sample is after the end of the cropped video
                         break;
                     }
                     currentTime += (double) entry.getDelta() / (double) track.getTrackMetaData().getTimescale();

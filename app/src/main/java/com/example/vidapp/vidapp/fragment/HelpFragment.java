@@ -28,16 +28,13 @@ public class HelpFragment extends Fragment implements View.OnClickListener {
     private final String TAG = getClass().getSimpleName();
     ImageView homeButton;
 VideoView helpVideo;
-
     CommunicationChannel mCommChListener;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_help, container, false);
-
 //        helpVideo = (VideoView) view.findViewById(R.id.home_video_view);
 //        helpVideo.setMediaController(null);
 //        helpVideo.setVideoURI(Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.help_video));  //Don't put extension
@@ -45,7 +42,6 @@ VideoView helpVideo;
 //        helpVideo.start();
         homeButton = (ImageView) view.findViewById(R.id.home_image_view);
         homeButton.setOnClickListener(this);
-
         return view;
     }
 
@@ -53,7 +49,6 @@ VideoView helpVideo;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
             case R.id.home_image_view:
                 sendMessage(3);
                 break;

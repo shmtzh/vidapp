@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
-  Created by shmtzh on 1/9/16.
+ * Created by shmtzh on 1/9/16.
  */
 public class ReorderingAdapter extends BaseDynamicGridAdapter {
-List<VideoModel> items = new ArrayList<>();
+    List<VideoModel> items = new ArrayList<>();
 
-    public ReorderingAdapter(Context context, List<VideoModel> items, int columnCount) {
+    public ReorderingAdapter(Context context, ArrayList<VideoModel> items, int columnCount) {
         super(context, items, columnCount);
         this.items = items;
     }
@@ -46,7 +46,7 @@ List<VideoModel> items = new ArrayList<>();
         }
 
         void build(int position) {
-        image.setImageBitmap(items.get(position).getBitmap());
+            image.setImageBitmap(items.get(position).getBitmap());
         }
     }
 }
