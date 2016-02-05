@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.vidapp.vidapp.R;
 import com.example.vidapp.vidapp.fragment.ChooseClipFragment;
+import com.example.vidapp.vidapp.fragment.FinishedVideoDisplayingFragment;
 import com.example.vidapp.vidapp.fragment.HelpFragment;
 import com.example.vidapp.vidapp.fragment.MakingVideoFragment;
 import com.example.vidapp.vidapp.fragment.MyLibFragment;
@@ -51,6 +52,7 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
     public static ArrayList<VideoModel> list = new ArrayList<>();
     public static ArrayList<VideoModel> selectedList = new ArrayList<>();
     public static int isVertical = 0;
+    static String path;
 
     public static ArrayList<File> libFiles = new ArrayList<>();
     public static ArrayList<VideoModel> libModels = new ArrayList<>();
@@ -82,6 +84,13 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 .commit();
     }
 
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        StartActivity.path = path;
+    }
 
     public void checkFilePermission() {
 
@@ -169,7 +178,6 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
                 fragment = new FinishedVideoDisplayingFragment();
                 break;
         }
-
         transaction.replace(R.id.container, fragment).addToBackStack("").commit();
     }
 
@@ -397,6 +405,11 @@ public class StartActivity extends AppCompatActivity implements CommunicationCha
         }
 
     }
+
+    static {
+        System.loadLibrary("hello-android-jni");
+    }
+    public native String getMsgFromJni();
 
 }
 

@@ -65,7 +65,6 @@ public class VideoDisplayerDialog extends DialogFragment {
     ArrayList<CutModel> toCutModel = new ArrayList<>();
 
     private Uri mUri;
-    int mDeviceOrientation;
     private final Handler mHandler = new Handler();
     private int mTrimStartTime = 0;
     private int mTrimEndTime = 0;

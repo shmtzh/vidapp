@@ -33,7 +33,7 @@ public class MyLibFragment extends Fragment implements View.OnClickListener {
     ArrayList<File> files = new ArrayList<>();
     ArrayList<VideoModel> list = new ArrayList<>();
     ImageView goHome;
-  public  static   ListView listView;
+    public static ListView listView;
     CommunicationChannel mCommChListener;
 
     public MyLibFragment() {
@@ -60,9 +60,11 @@ public class MyLibFragment extends Fragment implements View.OnClickListener {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VideoShowingDialog dialog = new VideoShowingDialog(list.get(position).getFile().getPath());
+//                VideoShowingDialog dialog = new VideoShowingDialog(list.get(position).getFile().getPath());
+//                dialog.show(getFragmentManager(), "VideoDisplayerDialog");
 
-                dialog.show(getFragmentManager(), "VideoDisplayerDialog");
+                StartActivity.setPath(list.get(position).getFile().getPath());
+                sendMessage(9);
             }
         });
     }
@@ -94,10 +96,6 @@ public class MyLibFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
-
-
-
-
 
 
 }

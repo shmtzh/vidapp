@@ -8,4 +8,5 @@ import java.util.ArrayList;
  */
 public interface CommunicationChannel {
     void setCommunication(int id);
+
 }

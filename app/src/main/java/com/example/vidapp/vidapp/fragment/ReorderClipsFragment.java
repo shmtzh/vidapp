@@ -53,9 +53,6 @@ public class ReorderClipsFragment extends Fragment implements View.OnClickListen
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!checkDirectory()) StartActivity.isVertical = 0;
                 VideoDisplayerDialog dialog = new VideoDisplayerDialog(list.get(position).getFile().getPath(), getActivity());
-                WindowManager.LayoutParams a = dialog.getActivity().getWindow().getAttributes();
-                a.dimAmount = 0;
-                dialog.getActivity().getWindow().setAttributes(a);
                 dialog.show(getFragmentManager(), "VideoDisplayerDialog");
             }
         });
